@@ -3,8 +3,8 @@ graceful shundown
 - about
 - termination signals
   - SIGTERAM : 프로그램 종료를 유발하는데 사용되는 일반 신호
-  - SIGINT : 사용자가 INTR (e.g. Ctrl + c) 입력하면 보내지는 신호
-  - SIGQUIT : SIGINT 와 비슷하게 QUIT (e.g. Ctrl + \) 입력하면 보내지는 신호, 에러 시그널을 보낸 것처럼 core dump 수행
+  - SIGINT : 사용자가 INTR (e.g. `Ctrl + c`) 입력하면 보내지는 신호
+  - SIGQUIT : SIGINT 와 비슷하게 QUIT (e.g. `Ctrl + \`) 입력하면 보내지는 신호, 에러 시그널을 보낸 것처럼 core dump 수행
   - SIGKILL : 즉시 프로그램 종료, 어플리케이션에서 핸들링하거나 무시할 수 없음
   - SIGHUP : 사용자의 터미널이 Disconnected 되었을 때 알려주기 위함
     - https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
