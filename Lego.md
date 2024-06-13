@@ -20,7 +20,8 @@ graceful shundown
         -  int getPhase() : 빈 시작되거나 종료될 때 순서 결졍, 낮은 숫자일 수록 높은 우선순위
         -  boolean isAutoStartup() : context 가 시작될 때 자동으로 빈이 시작될지 결정
         -  void stop(Runnalbe callback) : 비동기적으로 빈 중지, 중지 이후에 콜백 호출
-        -  복잡한 초기화 / 종료 시퀀스 관리할 때
+        -  복잡한 초기화 / 종료 시퀀스 관리할 때 사용
+        -  SmartLifecycle 빈은 인스턴스화되고 의존성 주입이 완료된 이후에 start() 메서드를 통해 초기화 -> isAutoStartup true 인 경우 context 가 시작될 때 자동 호출
       -  spring graceful shutdown 은 `spring.lifecycle.timeout-per-shutdown-phase` 에 설정된 시간 동안 대기하는데, 이 시간내에 모든 SmartLifecycle 빈의 stop(Runnable callback) 이 호출되고, 비동기 작업이 완료될 때까지 application 은 종료 되지 않는다.
     - SmartLifecycle bean 만 phases 에 들어가고, start() 를 호출해줌
   - 이 처리 중지는 기존 요청은 완료 할 수 있고, 새 요청은 허용되지 않는 유예 기간을 제공하는 타임아웃을 사용한다.
