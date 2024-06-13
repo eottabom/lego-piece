@@ -33,9 +33,12 @@ graceful shundown
        - SIGKILL 신호가 Pod 로 전송되고 Pod 제거
        - GracePeriod 이 후에도 컨테이너가 계속 실행 중이다 = SIGKILL 에 의해 강제 제거 and 종료
   - https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace?hl=en
-- test : client -> server (shudown: immediate and graceful, timeout-per-shudown-phase: , )
+- test : client -> server (shudown: immediate and graceful, timeout-per-shudown-phase: )
 - spring.lifecycle.timeout-per-shutdown-phase + preStop sleep time < terminationGracePeriodSeconds
-
+- 참고
+  - https://www.thoughtworks.com/insights/blog/cloud/shutdown-services-kubernetes
+  - https://spring.io/guides/topicals/spring-on-kubernetes
+  
 @PostConstruct / @PreDestory + Add spring bean life cycle
 
 why new line in spring check style
