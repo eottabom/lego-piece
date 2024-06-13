@@ -11,6 +11,18 @@ graceful shundown
 - Spring graceful shutdown
   - 4개의 embedded web servers 모두 지원 (Jetty, Reactor Netty, Tomcat and Undertow)
   - Application context 를 닫는 과정의 일부로 발생해서 SmartLifecycle bean 을 중지하는 가장 초기 단계에서 수행된다.
+    - SmartLifecycle 은 Lifecycle, Phased 를 구현한 인터페이스
+    - 종료 시점에 isRunning 을 체크해서 stop 을 호출 해주고 (Lifecycle 과 동일)
+    - 자동 실행으로 기동 시점에 start() 메서드를 호출
+      - Lifecycle 은 void start() : 빈이 시작될 때, void stop() : 빈이 중지 될 때, boolean isRunning() : 빈이 현재 실행 중인지 여부
+        - spring context 가 초기화 되거나 종료될 때 특정 동작을 수행 할 때
+      -  SmartLifecycle 은 빈의 생명 주기를 세밀하게 제어
+        -  int getPhase() : 빈 시작되거나 종료될 때 순서 결졍, 낮은 숫자일 수록 높은 우선순위
+        -  boolean isAutoStartup() : context 가 시작될 때 자동으로 빈이 시작될지 결정
+        -  void stop(Runnalbe callback) : 비동기적으로 빈 중지, 중지 이후에 콜백 호출
+        -  복잡한 초기화 / 종료 시퀀스 관리할 때
+      -  spring graceful shutdown 은 `spring.lifecycle.timeout-per-shutdown-phase` 에 설정된 시간 동안 대기하는데, 이 시간내에 모든 SmartLifecycle 빈의 stop(Runnable callback) 이 호출되고, 비동기 작업이 완료될 때까지 application 은 종료 되지 않는다.
+    - SmartLifecycle bean 만 phases 에 들어가고, start() 를 호출해줌
   - 이 처리 중지는 기존 요청은 완료 할 수 있고, 새 요청은 허용되지 않는 유예 기간을 제공하는 타임아웃을 사용한다.
   - Jetty, Reactor Netty, Tomcat 은 Network Later 에서 요청을 받지 않는다. (Tomcat 은 9.0.33 이상 필요)
   - Undertow 는 요청을 받지만, 503 에러를 응답
