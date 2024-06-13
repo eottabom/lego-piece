@@ -1,5 +1,40 @@
 
 graceful shundown 
+- about
+- termination signals
+  - SIGTERAM : 프로그램 종료를 유발하는데 사용되는 일반 신호
+  - SIGINT : 사용자가 INTR (e.g. Ctrl + c) 입력하면 보내지는 신호
+  - SIGQUIT : SIGINT 와 비슷하게 QUIT (e.g. Ctrl + \) 입력하면 보내지는 신호, 에러 시그널을 보낸 것처럼 core dump 수행
+  - SIGKILL : 즉시 프로그램 종료, 어플리케이션에서 핸들링하거나 무시할 수 없음
+  - SIGHUP : 사용자의 터미널이 Disconnected 되었을 때 알려주기 위함
+    - https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
+- Spring graceful shutdown
+  - 4개의 embedded web servers 모두 지원 (Jetty, Reactor Netty, Tomcat and Undertow)
+  - Application context 를 닫는 과정의 일부로 발생해서 SmartLifecycle bean 을 중지하는 가장 초기 단계에서 수행된다.
+  - 이 처리 중지는 기존 요청은 완료 할 수 있고, 새 요청은 허용되지 않는 유예 기간을 제공하는 타임아웃을 사용한다.
+  - Jetty, Reactor Netty, Tomcat 은 Network Later 에서 요청을 받지 않는다. (Tomcat 은 9.0.33 이상 필요)
+  - Undertow 는 요청을 받지만, 503 에러를 응답
+  - https://docs.spring.io/spring-boot/reference/web/graceful-shutdown.html
+  - https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/beans.html#beans-factory-lifecycle-combined-effects
+- k8s graceful shutdown
+    1) Pod is set to the “Terminating” State and removed from the endpoints list of all Services
+       - Termination 상태가 된 Pod 는 Service 의 로드밸런싱 대상에서 제외 -> 해당 Pod 로 트래픽이 전달되지 않음
+    2) preStop Hook is executed
+    3) SIGTERM signal is sent to the pod
+       - Pod 안에 어플리케이션이 SIGTERM 신호를 받을 때 Graceful shutdown 을 지원하지 않으면 preStop 설정을 해야함  
+    4) Kubernetes waits for a grace period
+       - terminationGracePeriodSeconds (default: 30s) 기다림
+       - preStop hook / SIGTERM 신호 실행과 병렬
+       - kubernetes 는 완료될 때까지 기다리지 않음
+       - 이 기간이 끝나면 다음 단계로 넘어감
+       - GracePeriod 기간 동안 Pod 가 모두 종료되면 GracePeriod 을 모두 기다리지 않고 종료
+       - preStop 의 작업을 기다리지 않는다 -> GracePeriod 가 지나면 preStop 설정된 작업이 진행중이더라도 강제 종료
+    5) SIGKILL signal is sent to pod, and the pod is removed
+       - SIGKILL 신호가 Pod 로 전송되고 Pod 제거
+       - GracePeriod 이 후에도 컨테이너가 계속 실행 중이다 = SIGKILL 에 의해 강제 제거 and 종료
+  - https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace?hl=en
+- test : client -> server (shudown: immediate and graceful, timeout-per-shudown-phase: , )
+- spring.lifecycle.timeout-per-shutdown-phase + preStop sleep time < terminationGracePeriodSeconds
 
 @PostConstruct / @PreDestory + Add spring bean life cycle
 
