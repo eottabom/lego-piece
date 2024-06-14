@@ -70,16 +70,16 @@ Spring Bean Life Cycle 흐름
 초기화 작업은 의존 관계 주입이 모두 완료되고 난 후에 호출되는데, 개발자가 의존 관계 주입이 완료된 시점을 알 수가 없다.
 
 Bean 생명 주기 관리
-(빈 인스턴스화 및 DI)
-XML 파일 / 자바설정클래스 / 어노테이션에서 빈 정의 스캔 -> 빈 인스턴스 생성 -> 빈 프로퍼티에 의존성 주입 ->
-(스프링 인지 여부 검사)
--> 빈이 BeanNameAware 인터페이스 구현 시 setBeanName() 호출 -> 빈이 BeanClassLoaderAware 인터페이스 구현시 setBeanClassLoader() 호출 -> 빈이 ApplicationContextAware 인터페이스 구현시 setApplicationContext() 호출 ->
-(빈 생성 생명 주기 콜백)
--> @PostConstruct 어노테이션 적용 메서드 호출 -> 빈인 InitializingBean 인터페이스 구현시 afterProperteisSet() 호출 -> 빈이 init-method 정의 하면 지정한 메서드 호출 ->
-(빈 소멸 생명 주기 콜백)
--> @PreDestory 어노테이션 적용 메서드 호출 -> 빈이 DispoableBean 인터페이스 구현시 destroy() 호출 -> 빈이 destroy-method 정의하면 지정한 메서드 호출 -> prototype 스코프 빈에서는 호출되지 않음
+(빈 인스턴스화 및 DI)  
+XML 파일 / 자바설정클래스 / 어노테이션에서 빈 정의 스캔 -> 빈 인스턴스 생성 -> 빈 프로퍼티에 의존성 주입 ->  
+(스프링 인지 여부 검사)  
+-> 빈이 BeanNameAware 인터페이스 구현 시 setBeanName() 호출 -> 빈이 BeanClassLoaderAware 인터페이스 구현시 setBeanClassLoader() 호출 -> 빈이 ApplicationContextAware 인터페이스 구현시 setApplicationContext() 호출 ->  
+(빈 생성 생명 주기 콜백)  
+-> @PostConstruct 어노테이션 적용 메서드 호출 -> 빈인 InitializingBean 인터페이스 구현시 afterProperteisSet() 호출 -> 빈이 init-method 정의 하면 지정한 메서드 호출 ->  
+(빈 소멸 생명 주기 콜백)  
+-> @PreDestory 어노테이션 적용 메서드 호출 -> 빈이 DispoableBean 인터페이스 구현시 destroy() 호출 -> 빈이 destroy-method 정의하면 지정한 메서드 호출 -> prototype 스코프 빈에서는 호출되지 않음  
 
-Spring 은 빈 생명 주기 콜백을 지원하는데,
+Spring 은 빈 생명 주기 콜백을 지원하는데,  
 인터페이스(InitializingBean, DisposableBean), Bean 설정 정보에 초기화,종료 메서드 지정,  @PostConstruct / @PreDestory 어노테이션 지원
 
 @PostConstruct / @PreDestory 이건 JSR-250 표준이라 spring 이 아닌 컨테이너에서도 동작한다.
