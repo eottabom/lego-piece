@@ -90,18 +90,30 @@ Spring 은 빈 생명 주기 콜백을 지원하는데,
 application context 에서 bean 을 제거하기 위해 사용된다.
 https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/postconstruct-and-predestroy-annotations.html
 
-why new line in spring check style
+### why new line in spring check style
+---
 
-리팩토링
+파일 끝에 개행이 없는 경우에는  
+CheckStyle 을 돌리거나, github 에 올리면 경고가 뜨는데,  
+파일 끝에 개행해줘야 하는 이유는 POSIX 명세가 그렇기 때문이다.  
 
-optional (https://dzone.com/articles/using-optional-correctly-is-not-optional)
+Definitions - 3.392 Text File : A file that contains characters organized into one or more lines. The lines do not contain NUL characters and none can exceed {LINE_MAX} bytes in length, including the Although IEEE Std 1003.1-2001 does not distinguish between text files and binary files (See the ISO C Standard), many utilities only produce predictable or meaningful output when operating on text files. The standard utilities that have such restrictions always specify “text files”in their STDIN or INPUT FILES sections.
+Definitions - 3.205 Line : A sequence of zero or more non- s plus a terminating .
 
-k6 예제
+행의 끝(terminating)은 개행(EOL, end-of-line)
+텍스트 파일은 행의 집합이며 행은 반드시 개행으로 끝난다.
 
-istio 트래픽 flow
 
-envoy
+### 리팩토링
 
-java list (Arrays.asList vs List.of vs Collections.singletonList )
+### optional (https://dzone.com/articles/using-optional-correctly-is-not-optional)
 
-testcontainer 
+### k6 예제
+
+### istio 트래픽 flow
+
+### envoy
+
+### java list (Arrays.asList vs List.of vs Collections.singletonList )
+
+### testcontainer 
