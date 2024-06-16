@@ -46,3 +46,5 @@ https://www.baeldung.com/linux/posix
 ### java list (Arrays.asList vs List.of vs Collections.singletonList )
 
 ### testcontainer 
+
+### 이펙티브 자바
