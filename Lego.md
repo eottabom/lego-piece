@@ -72,3 +72,7 @@ RestAssured 단점
 
 https://www.jadeglobal.com/blog/complete-guide-api-testing-using-rest-assured-tips-techniques-and-best-practices  
 https://github.com/rest-assured/rest-assured/wiki/Usage
+
+
+### java buildpack memory calculator
+https://github.com/cloudfoundry/java-buildpack-memory-calculator
