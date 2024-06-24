@@ -32,7 +32,7 @@ RestAssured 의 이점
    * Junit TestNG 와 같은 테스트 프레임워크와 쉽게 통합
 
 RestAssured 단점
-* SOAP(Simple Object Access Protocol) API 테스트를 면시적으로 지원하지 않음
+* SOAP(Simple Object Access Protocol) API 테스트를 명시적으로 지원하지 않음
 
 간단한 예시 
 
