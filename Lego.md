@@ -18,7 +18,7 @@
 ### RestAssured
 
 RestAssured 는 REST API 를 테스트하고 검증하는 오픈 소스 Java 라이브러리이다.  
-JSON 및 XML 기반 웹 서비시를 테스트 하는데 사용할 수 있다.  
+JSON 및 XML 기반 웹 서비스를 테스트 하는데 사용할 수 있다.  
 RestAssured 는 테스트 케이스 작성을 위해 Junit 및 TestNG 프레임워크와 통합 될 수 있다.
   
 RestAssured 의 이점
@@ -35,6 +35,12 @@ RestAssured 단점
 * SOAP(Simple Object Access Protocol) API 테스트를 면시적으로 지원하지 않음
 
 간단한 예시 
+
+결론  
+RestAssured 는 RESTful API 에 대한 강력하고 유지 관리 가능한 테스트를 생성하도록 설계된  
+매우 효과적이고 사용자 친화적인 오픈 소스 Java 라이브러리이다.  
+API 테스트 케이스 코딩 및 유지 관리에 대한 BDD 스타일 접근 방식을 제공하므로 테스터가 더 쉽게 이해하고 구현할 수 있다.  
+테스트 사례 생성 프로세스를 단순화하고 결과가 정확하고 신뢰할 수 있도록 보장하는 다양한 어설션과 내장된 메서드를 제공한다.  
 
 https://www.jadeglobal.com/blog/complete-guide-api-testing-using-rest-assured-tips-techniques-and-best-practices  
 https://github.com/rest-assured/rest-assured/wiki/Usage
