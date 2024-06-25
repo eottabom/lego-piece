@@ -38,6 +38,7 @@ final 이 지역 변수에 적용될 때 값은 정확히 한 번 할당 되어�
 로컬 변수에 `final` 키워드를 사용하면 성능이 향상 될 수 있다. 
 (JMH)  
 
+```
 @Benchmark
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.AverageTime)
@@ -56,6 +57,7 @@ public static String concatFinalStrings() {
     final String y = "y";
     return x + y;
 }  
+```
 
 Benchmark                              Mode  Cnt  Score   Error  Units
 BenchmarkRunner.concatFinalStrings     avgt  200  2,976 ± 0,035  ns/op
