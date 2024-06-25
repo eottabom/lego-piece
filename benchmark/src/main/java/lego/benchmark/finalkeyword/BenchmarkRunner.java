@@ -33,8 +33,7 @@ public class BenchmarkRunner {
 	@OutputTimeUnit(TimeUnit.NANOSECONDS)
 	@BenchmarkMode(Mode.AverageTime)
 	public static String compilerOptimizationString() {
-		String xy = "xy";
-		return xy;
+		return "xy";
 	}
 
 	@Benchmark
