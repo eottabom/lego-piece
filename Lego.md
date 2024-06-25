@@ -10,19 +10,23 @@ https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12
 
 `final` 로 선언된 문자열을 연결하는 코드가 있다면,  
 
+```
 public static void main(String[] args) {
     final String hello = "hello";
     final String world = "world";
     String test = hello + " " + world;
     System.out.println(test);
 }
+```
   
 컴파일러는 기본 메서드에서 실행된 코드를 다음과 같이 변경한다.  
 
+```
 public static void main(String[] var0) {
     String var1 = "hello world";
     System.out.println(var1);
 }
+```
   
 반면에 final 을 제거하면 effectively final 로 간주하지만, 연결에만 사용되기 때문에 컴파일러는 이를 최적화하지 않는다.
 
