@@ -1,3 +1,65 @@
+### Effectively final vs final
+
+Java 8 에 도입된 기능 중 하나는 `Effectively final` 이다.  
+이를 통해 변수, 필드 및 매개 변수에 대해 final 을 쓰지 않고 final 처럼 효과적으로 처리하고 사용할 수 있다.  
+
+JLS 4.12.4 에서는 컴파일 타임 오류 없이 유효한 프로그램의 매개변수나 지역 변수에 final 를 제거하면 effectively final 이 된다고 명시하고 있다.  
+https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12
+
+하지만, Java 컴파일러는 `Effectively final` 변수에 대한 정적 코드 최적화를 수행하지 않는다.  
+
+`final` 로 선언된 문자열을 연결하는 코드가 있다면,  
+
+public static void main(String[] args) {
+    final String hello = "hello";
+    final String world = "world";
+    String test = hello + " " + world;
+    System.out.println(test);
+}
+  
+컴파일러는 기본 메서드에서 실행된 코드를 다음과 같이 변경한다.  
+
+public static void main(String[] var0) {
+    String var1 = "hello world";
+    System.out.println(var1);
+}
+  
+반면에 final 을 제거하면 effectively final 로 간주하지만, 연결에만 사용되기 때문에 컴파일러는 이를 최적화하지 않는다.
+
+사실, `final` keyword 를 사용하면 얻을 수 있는 성능 상의 이점은 매우 인기 있는 논쟁이다.  
+어디에 적용하느냐에 따라 `final` 은 다른 목적과 성능에 미치는 영향을 가질 수 있다.  
+
+지역변수  
+final 이 지역 변수에 적용될 때 값은 정확히 한 번 할당 되어야 한다.  
+로컬 변수에 `final` 키워드를 사용하면 성능이 향상 될 수 있다. 
+(JMH)  
+
+@Benchmark
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
+public static String concatNonFinalStrings() {
+    String x = "x";
+    String y = "y";
+    return x + y;
+}
+
+
+@Benchmark
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.AverageTime)
+public static String concatFinalStrings() {
+    final String x = "x";
+    final String y = "y";
+    return x + y;
+}  
+
+Benchmark                              Mode  Cnt  Score   Error  Units
+BenchmarkRunner.concatFinalStrings     avgt  200  2,976 ± 0,035  ns/op
+BenchmarkRunner.concatNonFinalStrings  avgt  200  7,375 ± 0,119  ns/op  
+
+https://www.baeldung.com/java-final-performance
+
+
 
 ### 리팩토링
 
