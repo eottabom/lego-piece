@@ -159,7 +159,6 @@ java/lang/Object;)Ljava/lang/invoke/CallSite;
          2: areturn                           // 문자열 "xy" 를 반환한다.
       LineNumberTable:
         line 12: 0
-        line 13: 3
 
   public static java.lang.String finalStrings();
     descriptor: ()Ljava/lang/String;
