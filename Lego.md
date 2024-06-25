@@ -174,12 +174,51 @@ java/lang/Object;)Ljava/lang/invoke/CallSite;
 ```
 
 바이트 코드를 보면, finalStrings 메서드는 이미 최적화된 결과를 반환하는 것을 볼 수 있다.  
-지역 변수 `final` 키워드를 추가하는 것이 바이트 코드 최적화에 큰 영향을 주지 않는데,    
-그 이유는 여러가지가 있을 것 같다.
+하지만, 지역 변수 `final` 키워드를 추가하는 것이 바이트 코드 최적화에 큰 영향을 주지 않는데,  
+그 이유는 여러가지가 있을 것 같다. 
 
 + Java의 내부 최적화 메커니즘
   - Java 컴파일러와 JIT 컴파일러는 지역 변수에 final 키워드를 사용하여 최적화할 수 있는 여러 기회를 제공하지만, 이는 모든 경우에 해당하지 않는다.
   - 예를 들어, 객체의 생성과 관련된 최적화는 final 키워드를 사용하여 객체 참조를 변경하지 않음을 알려줄 수 있지만, 이는 단일 객체 생성 후에는 큰 이점을 제공하지 않을 수 있다.
+ 
+```
+public class Example {
+    
+    private final SomeObject finalObject;
+
+    public Example() {
+        finalObject = new SomeObject();
+    }
+
+    public SomeObject getFinalObject() {
+        return finalObject;
+    }
+}
+```
+finalObject 은 final 로 선언되었기 때문에 생성자에서 한 번 초기화 된 후에 다시 할당 될 수 없다.  
+이것은 컴파일러에세 객체 finalObject 가 초기화 이후에는 불변하다는 것을 알려주고, 컴파일러는 최적화를 수행할 수 있다.
+
+그러나, 이러한 최적화는 객체나 배열에 포함되거나 객체의 상태가 변경되는 경우 제한 될 수 있다.  
+
+```
+public class Example {
+
+    private final List<Integer> numbers = new ArrayList<>();
+
+    public Example() {
+        numbers.add(1);
+        numbers.add(2);
+    }
+
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
+}
+```
+
+위의 예제에서 numbers 는 final 로 선언되었지만 list 자체는 불변이 아니다.  
+final 키워드는 객체의 참조가 변경되지 않음을 보장하지만,  
+**객체의 내부 상태까지 불변을 보장하지 않는다.**
 
 + 불변성이 보장되는 변수만 최적화 가능
   - final 키워드는 변수의 값이 한 번 설정되면 변경되지 않음을 보장하지만, 이는 컴파일러가 해당 변수를 특정한 방식으로 최적화할 수 있도록 하는 것뿐이다.
