@@ -156,9 +156,7 @@ java/lang/Object;)Ljava/lang/invoke/CallSite;
     Code:
       stack=1, locals=1, args_size=0
          0: ldc           #15                 // String xy, Constant Pool 에서 인덱스 #15 에 해당하는 문자열 "xy" 를 스택에 넣는다.
-         2: astore_0                          // 스택의 값을 로컬 변수 0에 저장한다.
-         3: aload_0                           // 로컬 변수 0의 값을 스택에 로드한다.
-         4: areturn                           // 문자열 "xy" 를 반환한다.
+         2: areturn                           // 문자열 "xy" 를 반환한다.
       LineNumberTable:
         line 12: 0
         line 13: 3
