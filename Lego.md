@@ -6,6 +6,8 @@ Java 8 에 도입된 기능 중 하나는 `Effectively final` 이다.
 JLS 4.12.4 에서는 컴파일 타임 오류 없이 유효한 프로그램의 매개변수나 지역 변수에 final 를 제거하면 effectively final 이 된다고 명시하고 있다.  
 https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12
 
+> Certain variables that are not declared final are instead considered effectively final
+
 하지만, Java 컴파일러는 `Effectively final` 변수에 대한 정적 코드 최적화를 수행하지 않는다.  
 
 `final` 로 선언된 문자열을 연결하는 코드가 있다면,  
