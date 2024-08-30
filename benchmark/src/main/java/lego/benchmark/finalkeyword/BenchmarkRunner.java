@@ -44,4 +44,21 @@ public class BenchmarkRunner {
 		final String y = "y";
 		return x + y;
 	}
+
+	@Benchmark
+	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	@BenchmarkMode(Mode.AverageTime)
+	public static int nonFinalMethodBenchmark() {
+		MethodTest test = new MethodTest();
+		return test.nonFinalMethod();
+	}
+
+	@Benchmark
+	@OutputTimeUnit(TimeUnit.NANOSECONDS)
+	@BenchmarkMode(Mode.AverageTime)
+	public static int finalMethodBenchmark() {
+		MethodTest test = new MethodTest();
+		return test.finalMethod();
+	}
+
 }

@@ -1,4 +1,4 @@
-### Effectively final and final
+### About final
 
 --- 
 
@@ -247,9 +247,112 @@ public class Example {
 final 키워드는 객체의 참조가 변경되지 않음을 보장하지만, **객체의 내부 상태까지 불변을 보장하지 않는다.**
 
 https://www.baeldung.com/java-final-performance
+  
+### Q. final method 를 사용할 때의 장점은 무엇이 있을까?
 
+---
 
-그렇다면, final 은 언제 써야 하는게 좋을까??
+`final` 을 사용하면 해당 메서드를 **오버라이딩 할 수 없게** 만든다.
+메서드를 `final` 로 선언하면서 해당 메서드가 하위 클래스에서 오버라이딩 하지 않게 강제할 수 있으므로,  
+특정 메서드의 동작이 변경되지 않도록 보장하여 코드의 무결성을 유지할 수 있다.  
+그렇다보니, 상위 클래스에서 정의한 메서드 동작이 항상 동일하게 유지되면서 코드를 이해하기 쉬워진다.
+
+```
+// 부모 클래스 Animal
+class Animal {
+    // 메서드가 final로 선언되었음
+    public final void makeSound() {
+        System.out.println("The animal makes a sound");
+    }
+
+    // 일반 메서드
+    public void move() {
+        System.out.println("The animal moves");
+    }
+}
+
+// 자식 클래스 Dog
+class Dog extends Animal {
+    // 오버라이딩을 시도하면 컴파일 오류가 발생함
+    // public void makeSound() {
+    //     System.out.println("The dog barks");
+    // }
+
+    // 일반 메서드는 오버라이딩 가능
+    @Override
+    public void move() {
+        System.out.println("The dog runs");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.makeSound();  // 부모 클래스의 final 메서드 호출
+        dog.move();       // 자식 클래스에서 오버라이딩한 메서드 호출
+    }
+}
+```
+
+그리고, 약간의 성능 향상을 시킬 수 있다.  
+JIT 컴파일러가 `final` 메서드가 오버라이딩 될 수 없다는 것을 알기 때문에,  
+메서드 호출 시 가상 메서드 테이블을 사용하지 않고 직접 호출 할 수 있다.  
+따라서, 메서드 호출의 성능을 약간 향상 시킬 수 있다.  
+
+아래의 코드를 간단히 benchmark 를 해보면 아래와 같은 결과를 얻을 수 있다.  
+(단, benchmark 라는 것을 감안해야한다.)
+
+```java
+public class MethodTest {
+
+	private final int[] numbers = new int[1000];
+
+	public MethodTest() {
+		for (int i = 0; i < this.numbers.length; i++) {
+			this.numbers[i] = i;
+		}
+	}
+
+	public int nonFinalMethod() {
+		int sum = 0;
+		for (int number : this.numbers) {
+			sum += complexCalculation(number);
+		}
+		return sum;
+	}
+
+	public final int finalMethod() {
+		int sum = 0;
+		for (int number : this.numbers) {
+			sum += complexCalculationFinal(number);
+		}
+		return sum;
+	}
+
+	private int complexCalculation(int value) {
+		return (value * 31) ^ (value >>> 2);
+	}
+
+	private final int complexCalculationFinal(int value) {
+		return (value * 31) ^ (value >>> 2);
+	}
+
+}
+```
+
+| Benchmark                               |Mode|Cnt| Score    | Error           | Units |
+|-----------------------------------------|--|--|----------|-----------------|-------|
+| BenchmarkRunner.finalMethodBenchmark    |avgt|5| 355.031  | ±6.035  | ns/op |
+| BenchmarkRunner.nonFinalMethodBenchmark |avgt|5| 369.924  | ± 18.398  | ns/op |
+
+benchmark 결과로는 `final` method 가 성능이 조금 더 좋은 것을 알 수 있다.  
+하지만, `final` method 를 쓰면 무조건 성능이 잘나오는 다는 것은 아니다.  
+이유는 기본적으로 JVM 의 JIT 컴파일러는 `final` 키워드가 없더라도 메서드를 잘 최적화 한다.  
+JIT 컴파일러는 메서드가 오버라이드 되지 않는다고 판단되면 `final` 메서드처럼 최적화 한다.
+(JIT 컴파일러가 인라인 최적화 할 때 메서드 호출 오버헤드를 없애기 때문)  
+따라서, 간단한 연산을 하는 메서드의 경우는 오버헤드가 미미하여 `final` 의 효과가 크게 드러나지 않을 수 있다.  
+
+## 그렇다면, final 은 언제 써야 하는게 좋을까??
 
 ### Best practices for using final keyword in Java
 
