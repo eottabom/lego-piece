@@ -72,7 +72,7 @@ BenchmarkRunner.finalStrings                avgt    5  0.340 ± 0.004  ns/op
 BenchmarkRunner.nonFinalStrings             avgt    5  4.404 ± 0.188  ns/op
 
 
-해당 메서드들을 컴파일해서 `javap` 커맨드로 바이트코드를 확인해보면,
+해당 메서드들을 컴파일해서 `javap` 커맨드로 바이트코드를 확인해보면,  
 ```
 javac XXX.java  
 javap -v -p -s XXX.class
