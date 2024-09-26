@@ -17,7 +17,14 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	jmhVersion = '1.37'
+	logbackVersion = '1.5.8'
+}
+
 dependencies {
-	implementation 'org.openjdk.jmh:jmh-core:1.37'
-	annotationProcessor  'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+	implementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+	implementation "ch.qos.logback:logback-core:${logbackVersion}"
+	annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 }
