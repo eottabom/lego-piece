@@ -58,7 +58,7 @@ public class LoggingBenchmark {
 	@Benchmark
 	public void benchmarkLoggerDisabled() throws InterruptedException {
 		ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
-		logger.setLevel(Level.OFF); // Logger 비활성화
+		logger.setLevel(Level.OFF);
 		for (int i = 0; i < THREAD_COUNT; i++) {
 			executor.submit(() -> {
 				for (int j = 0; j < ITERATIONS_PER_THREAD; j++) {
