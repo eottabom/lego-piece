@@ -25,6 +25,8 @@
 
 | Benchmark                               |Mode|Cnt| Score    | Error           | Units |
 |-----------------------------------------|--|--|----------|-----------------|-------|
-|LoggingBenchmark.benchmarkLoggerDisabled    |thrpt   |10  |2380.160 |± 528.324  | ops/s |
-|LoggingBenchmark.benchmarkLoggerEnabled     |thrpt   |10  |1291.681 |± 304.764  | ops/s |
-|LoggingBenchmark.benchmarkSystemOutPrintln  |thrpt   |10     |5.920 |±   0.760  | ops/s |
+| LoggingBenchmark.benchmarkJavaLoggerDisabled | thrpt| 10 | 2618.238 | ±  90.077  | ops/s |
+| LoggingBenchmark.benchmarkJavaLoggerEnabled  | thrpt| 10   | 2.986 | ±   0.711  | ops/s |
+| LoggingBenchmark.benchmarkLoggerDisabled     | thrpt| 10 | 2480.615 | ± 272.262 | ops/s |
+| LoggingBenchmark.benchmarkLoggerEnabled      | thrpt| 10 | 1419.497 | ± 221.123 | ops/s |
+| LoggingBenchmark.benchmarkSystemOutPrintln   | thrpt| 10  |    6.468 | ±   0.692 | ops/s |

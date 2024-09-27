@@ -22,6 +22,9 @@ public class LoggingBenchmark {
 
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoggingBenchmark.class);
 
+	private static final java.util.logging.Logger javaLogger = java.util.logging.Logger
+		.getLogger(LoggingBenchmark.class.getSimpleName());
+
 	private static final int THREAD_COUNT = 4;
 
 	private static final int ITERATIONS_PER_THREAD = 1000;
@@ -63,6 +66,35 @@ public class LoggingBenchmark {
 			executor.submit(() -> {
 				for (int j = 0; j < ITERATIONS_PER_THREAD; j++) {
 					logger.info("Test message " + j);
+				}
+			});
+		}
+		executor.shutdown();
+		executor.awaitTermination(1, TimeUnit.HOURS);
+	}
+
+	@Benchmark
+	public void benchmarkJavaLoggerEnabled() throws InterruptedException {
+		ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
+		for (int i = 0; i < THREAD_COUNT; i++) {
+			executor.submit(() -> {
+				for (int j = 0; j < ITERATIONS_PER_THREAD; j++) {
+					javaLogger.info("Test message " + j);
+				}
+			});
+		}
+		executor.shutdown();
+		executor.awaitTermination(1, TimeUnit.HOURS);
+	}
+
+	@Benchmark
+	public void benchmarkJavaLoggerDisabled() throws InterruptedException {
+		ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
+		javaLogger.setLevel(java.util.logging.Level.OFF);
+		for (int i = 0; i < THREAD_COUNT; i++) {
+			executor.submit(() -> {
+				for (int j = 0; j < ITERATIONS_PER_THREAD; j++) {
+					javaLogger.info("Test message " + j);
 				}
 			});
 		}
