@@ -78,7 +78,6 @@ protobuf {
 		all()*.plugins {
 			// Configure the task - apply codegen plugins.
 			grpc {}
-//			reactorGrpc {}
 		}
 	}
 }
