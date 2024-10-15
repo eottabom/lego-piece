@@ -1,7 +1,19 @@
 syntax = "proto3";
 
-option java_package = "lego.benchmark";
+option java_package = "lego.example";
 option java_outer_classname = "PersonProto";
+
+service PersonService {
+  rpc GetPerson(PersonRequest) returns (PersonResponse);
+}
+
+message PersonRequest {
+  string name = 1;
+}
+
+message PersonResponse {
+  Person person = 1;
+}
 
 message Person {
   string name = 1;
