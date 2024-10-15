@@ -36,30 +36,16 @@ public final class PersonServer {
 			String name = request.getName();
 			PersonProto.PersonResponse response;
 
-			if ("eottabom".equals(name)) {
-				PersonProto.Address address = PersonProto.Address.newBuilder()
-					.setCity("Seoul")
-					.setZipCode("1234")
-					.build();
+			PersonProto.Address address = PersonProto.Address.newBuilder().setCity("Seoul").setZipCode("1234").build();
 
-				PersonProto.Person person = PersonProto.Person.newBuilder()
-					.setName(name)
-					.setAge(35)
-					.setPhoneNumber("010-1234-1234")
-					.setAddress(address)
-					.build();
+			PersonProto.Person person = PersonProto.Person.newBuilder()
+				.setName(name)
+				.setAge(35)
+				.setPhoneNumber("010-1234-1234")
+				.setAddress(address)
+				.build();
 
-				response = PersonProto.PersonResponse.newBuilder().setPerson(person).build();
-			}
-			else {
-				PersonProto.Person person = PersonProto.Person.newBuilder()
-					.setName("Unknown")
-					.setAge(0)
-					.setPhoneNumber("N/A")
-					.build();
-
-				response = PersonProto.PersonResponse.newBuilder().setPerson(person).build();
-			}
+			response = PersonProto.PersonResponse.newBuilder().setPerson(person).build();
 
 			responseObserver.onNext(response);
 			responseObserver.onCompleted();
