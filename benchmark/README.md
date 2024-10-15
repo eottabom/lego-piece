@@ -30,3 +30,11 @@
 | LoggingBenchmark.benchmarkLoggerDisabled     | thrpt| 10 | 2480.615 | ± 272.262 | ops/s |
 | LoggingBenchmark.benchmarkLoggerEnabled      | thrpt| 10 | 1419.497 | ± 221.123 | ops/s |
 | LoggingBenchmark.benchmarkSystemOutPrintln   | thrpt| 10  |    6.468 | ±   0.692 | ops/s |
+
+
+### JSON vs Protobuf 
+
+| Benchmark                               | Mode | Cnt | Score    | Error    | Units |
+|-----------------------------------------|------|-----|----------|----------|-------|
+| SerializationBenchmark.jsonBenchmark    | thrpt | 10  | 3550.345 | ± 46.399 | ops/s |
+| SerializationBenchmark.protobufBenchmark | thrpt | 10  | 4203.831 | ± 97.497 | ops/s |

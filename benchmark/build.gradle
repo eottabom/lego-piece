@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.1'
 	id 'io.spring.dependency-management' version '1.1.5'
+	id 'com.google.protobuf' version '0.8.19'
 }
 
 group = 'lego'
@@ -20,11 +21,38 @@ repositories {
 ext {
 	jmhVersion = '1.37'
 	logbackVersion = '1.5.8'
+	grpcVersion = '4.28.2'
+	jacksonVersion = '2.15.0'
+	okHttpVersion = '4.9.3'
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+
 	implementation "ch.qos.logback:logback-classic:${logbackVersion}"
 	implementation "ch.qos.logback:logback-core:${logbackVersion}"
+
+	implementation "com.google.protobuf:protobuf-java:${grpcVersion}"
+
+	implementation "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+
+	implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
 	annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
+}
+
+protobuf {
+	protoc {
+		artifact = 'com.google.protobuf:protoc:3.21.12'
+	}
+	generatedFilesBaseDir = "$projectDir/src/generated"
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs += "$projectDir/src/generated/main/java"
+		}
+	}
 }

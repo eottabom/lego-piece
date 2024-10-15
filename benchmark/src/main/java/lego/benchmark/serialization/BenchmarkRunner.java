@@ -1,4 +1,4 @@
-package lego.benchmark.logger;
+package lego.benchmark.serialization;
 
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
@@ -10,7 +10,7 @@ public final class BenchmarkRunner {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Options opt = new OptionsBuilder().include(LoggingBenchmark.class.getSimpleName()).forks(1).build();
+		Options opt = new OptionsBuilder().include(SerializationBenchmark.class.getSimpleName()).forks(1).build();
 
 		new Runner(opt).run();
 	}
